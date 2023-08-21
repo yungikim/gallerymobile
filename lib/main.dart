@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'multiImage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -188,6 +189,7 @@ enum MenuOptions {
   loadHtmlString,
   transparentBackground,
   setCookie,
+  multiimage,
 }
 
 
@@ -245,6 +247,11 @@ class SampleMenu extends StatelessWidget {
           case MenuOptions.setCookie:
             _onSetCookie();
             break;
+          case MenuOptions.multiimage:
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MultiImageApp()),
+            );
         }
       },
       itemBuilder: (BuildContext context) => <PopupMenuItem<MenuOptions>>[
@@ -300,6 +307,10 @@ class SampleMenu extends StatelessWidget {
         const PopupMenuItem<MenuOptions>(
           value: MenuOptions.setCookie,
           child: Text('Set cookie'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.multiimage,
+          child: Text('Multi Image'),
         ),
       ],
     );
@@ -419,6 +430,8 @@ class SampleMenu extends StatelessWidget {
   Future<void> _onTransparentBackground() {
     return webViewController.loadHtmlString(kTransparentBackgroundPage);
   }
+
+
 
   Widget _getCookieList(String cookies) {
     if (cookies == '""') {
